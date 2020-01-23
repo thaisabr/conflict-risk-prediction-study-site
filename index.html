@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Using acceptance tests to predict merge conflict risk</title>
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&amp;subset=latin-ext" rel="stylesheet">
+    
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <script src="http://www.w3schools.com/lib/w3data.js"></script>
+    <script>
+        $(function(){
+            $("#includedContent").load("content.html");
+        });
+    </script>
+  </head>
+  <body style="font-family:verdana;">
+    <header>
+      <div class="top">
+		  <div class="container">
+		      <div class="row">
+		          <div class="col-sm-6">
+		              <p>Using acceptance tests to predict merge conflict risk</p>
+		          </div>
+		      </div>
+		  </div>
+		</div>
+		<nav class="navbar navbar-default">
+			<div class="container">
+			<div class="collapse navbar-collapse" id="bs-navbar-collapse">
+		    	<ul class="nav navbar-nav main-navbar-nav">
+		        	<li class="active"><a href="main.html" title="">Home</a></li>
+		        	<li class="dropdown">
+		            	<a href="#" title="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Evaluation Results <span class="caret"></span></a>
+		            	<ul class="dropdown-menu">
+						<li><a href="results.html" title="">Interfaces and predictions</a></li>
+					    <li><a href="rq1-results.html" title="">RQ1</a></li>
+                      	<li><a href="rq2-results.html" title="">RQ2</a></li>
+		      			<li><a href="rq3-results.html" title="">RQ3</a></li>
+		      			<li><a href="rq4-results.html" title="">RQ4</a></li>
+		            	</ul>
+		        	</li>
+					<li class="dropdown">
+		            	<a href="#" title="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sample<span class="caret"></span></a>
+		            	<ul class="dropdown-menu">
+							<li><a href="sample_projects.html" title="">Initial projects selection</a></li>
+							<li><a href="sample_tasks.html" title="">Construction of task pair sample</a></li>
+		                	<li><a href="task_pair_sample.html" title="">Task pair sample</a></li>							
+		            	</ul>
+		        	</li>
+		    	</ul>                           
+			</div>        
+			</div>
+		</nav>
+    </header>
+    
+    <main class="site-main page-main">
+        <div class="container">
+            <div class="row">
+                <div class="page col-sm-12">
+                  <h1>Using acceptance tests to predict merge conflict risk</h1>
+				</div>
+			</div>
+			<div class="row">
+                <section class="page col-sm-12">
+				  <div class="abstract">
+					<h4>Abstract:</h4>
+                    <p>In a collaborative development context, conflicting code changes might compromise software quality and developers productivity. 
+					To reduce conflicts, one could avoid the parallel execution of potentially conflicting tasks. 
+					Although hopeful, this strategy is challenging because it relies on the prediction of the required file changes to complete a task.
+					As predicting such file changes is hard, we investigate its feasibility for BDD (Behaviour-Driven Development) projects, which write automated acceptance tests before implementing features.
+					We develop a tool that, for a given task, statically analyzes the code that automates the tests and infers test-based interfaces (files that could be executed by the tests), approximating files that would be changed by the task.
+					To assess the accuracy of this approximation, we measure precision and recall of test-based interfaces of 513 tasks from 18 Rails projects on GitHub using Cucumber as acceptance test tool.
+					We also compare such interfaces with randomly defined interfaces, interfaces obtained by textual similarity of test specifications with past tasks, and interfaces computed by executing tests.
+					Our results give evidence that, in the specific context of BDD, Cucumber tests might help to predict files changed by tasks. 
+					We find that the better the test coverage, the better the predictive power.
+					A hybrid approach for computing test-based interfaces is promising.</p>
+                  </div>
+
+                  <div class="study">
+                    <h4>Study Setup</h4>
+					<p> In brief, we performed three main search rounds. In the first round, we restricted the project’s maximum number of stars, sorting results by descending order of stars number, hoping to select more meaningful and popular projects. In the second round, we just sorted results by the date of the last update, to analyze first active projects. Finally, we verified the Ruby projects referenced by Cucumber’s site. As a result, we have a set of 61 selected Rails projects that use Cucumber, and a subset of 18 projects that additionally use Simplecov or Coveralls, which are coverage tools. </p>
+					<p> After obtaining relevant projects that use the tools of interest for our study, we further filter out projects without a number of tasks that contribute with both production code and Cucumber tests. For extracting tasks from a given project, we clone the project repository and search for merge commits (excluding fast-forwarding merges) by using JGit API, sorting them by descending chronological order. We admit merge commits performed until September 30th, 2017. Then we extract two tasks from each merge commit, each one corresponding to one of the merged contributions. As preliminary filtering, we select tasks that change both production and Gherkin test files. Moreover, as a matter of performance while computing interfaces, we discard tasks that exceed 500 commits. The result of this mining phase refines the set of 61 projects we had from the previous phase, discarding 30 projects (14 projects do not contain merge commits and 16 projects do not contain any task that both changes production and Gherkin files). In brief, we have a set of tasks extracted from 31 Rails projects that use Cucumber, and a subset of 15 projects that additionally use the mentioned coverage tools. Besides that, we have a set of tasks for which we possibly can compute other interfaces we study here except DTestI, and a subset of tasks for which we can compute DTestI. </p>
+					<p>Once we have a tasks set, we move on to the execution phase. First, we identified the acceptance tests of each task as added or modified scenarios by task's commit. Next, we computed ITest according to eight different configurations and IReal, and we evaluated precision and recall for each task.</p>
+                    <ul>
+					  <li><a href="https://github.com/thaisabr/mining_git" title="">Script for mining projects and extracting tasks</a></li>
+					  <li><a href="https://github.com/thaisabr/TestInterfaceEvaluation" title="">Script for computing TestI (TAITI)</a></li>
+					  <li>Script for computing TextI</li>
+					  <li>Script for generating predictions of merge conflict risk</li>
+                      <li><a href="sample.html" title="">Task pair sample</a></li>				  
+                    </ul>
+				  </div>
+				  
+                  <div class="study">
+                    <h4>Evaluation Results</h4>
+                    <ul>
+					  <li><a href="results.html" target="_blank" title="">Interfaces and predictions of merge conflict risk</a></li>
+                      <li><a href="rq1-results.html" target="_blank" title="">RQ1: How often does TestI predict file changes associated with a task?</a></li>
+                      <li><a href="rq2-results.html" target="_blank" title="">RQ2: Is static code analysis suitable to compute TestI?</a></li>
+					  <li><a href="rq3-results.html" target="_blank" title="">RQ3: Is TestI a better code change predictor than RandomI?</a></li>
+					  <li><a href="rq4-results.html" target="_blank" title="">RQ4: Is TestI a better code change predictor than TextI?</a></li>					  
+                    </ul>
+                  </div>
+				</section>
+            </div>
+        </div>
+    </main>
+    <footer>
+      <div class="container">
+        <div class="cen">
+            <div class="col-md-12">
+                
+            </div>
+        </div>
+      </div>
+      <div id="copyright">
+            <div class="container">
+                <div class="cen">
+                    <div class="col-md-8">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </body>
+  </html>
