@@ -68,16 +68,19 @@
                 <section class="page col-sm-12">
 				  <div class="abstract">
 					<h4>Abstract:</h4>
-                    <p>In a collaborative development context, conflicting code changes might compromise software quality and developers productivity. 
-					To reduce conflicts, one could avoid the parallel execution of potentially conflicting tasks. 
-					Although hopeful, this strategy is challenging because it relies on the prediction of the required file changes to complete a task.
-					As predicting such file changes is hard, we investigate its feasibility for BDD (Behaviour-Driven Development) projects, which write automated acceptance tests before implementing features.
-					We develop a tool that, for a given task, statically analyzes the code that automates the tests and infers test-based interfaces (files that could be executed by the tests), approximating files that would be changed by the task.
-					To assess the accuracy of this approximation, we measure precision and recall of test-based interfaces of 513 tasks from 18 Rails projects on GitHub using Cucumber as acceptance test tool.
-					We also compare such interfaces with randomly defined interfaces, interfaces obtained by textual similarity of test specifications with past tasks, and interfaces computed by executing tests.
-					Our results give evidence that, in the specific context of BDD, Cucumber tests might help to predict files changed by tasks. 
-					We find that the better the test coverage, the better the predictive power.
-					A hybrid approach for computing test-based interfaces is promising.</p>
+                    <p>The occurrence of merge conflicts might impair software development.
+					Developers might reduce conflicts by avoiding to perform tasks that change the same files in parallel.
+					As predicting the set of files changed by a task is hard, we use the TAITI tool to compute task interfaces (an approximation of the changed files set).
+					Such a tool takes as input a set of automated acceptance tests that validate the expected behavior of each task, assuming a BDD (Behaviour-Driven Development) context, in which tests guide code development.
+					We measure the conflict risk between tasks as the intersection among its interfaces.
+					To assess the predictions of conflict risk, we measure precision and recall of 6,360 task pairs from 19 Rails projects on GitHub.
+					Our results confirm that Cucumber tests might help to predict the risk of merge conflicts, given the intersection among interfaces denotes a higher probability that the tasks change some file in common.
+					A minimal intersection predicts conflict risk with 0.59 of precision and 0.98 of recall.
+					Also, the higher the intersection size, the higher the number of files changed by both tasks.
+					This way, developers might use the intersection size between TestI as a degree of conflict risk between tasks, prioritizing the selection of a task to work on whose TestI has the lowest intersection with others.
+					Finally, a predictor of conflict risk based on TestI outperforms a predictor based on similar past tasks. 
+					Regardless of promising results, sometimes the intersection among interfaces does not guess the conflicting files.
+					</p>
                   </div>
 
                   <div class="study">
@@ -98,10 +101,10 @@
                     <h4>Evaluation Results</h4>
                     <ul>
 					  <li><a href="results.html" target="_blank" title="">Interfaces and predictions of merge conflict risk</a></li>
-                      <li><a href="rq1-results.html" target="_blank" title="">RQ1: How often does TestI predict file changes associated with a task?</a></li>
-                      <li><a href="rq2-results.html" target="_blank" title="">RQ2: Is static code analysis suitable to compute TestI?</a></li>
-					  <li><a href="rq3-results.html" target="_blank" title="">RQ3: Is TestI a better code change predictor than RandomI?</a></li>
-					  <li><a href="rq4-results.html" target="_blank" title="">RQ4: Is TestI a better code change predictor than TextI?</a></li>						  
+                      <li><a href="rq1-results.html" target="_blank" title="">RQ1: Are tasks with non disjoint TestI interfaces associated with higher merge conflict risk?</a></li>
+                      <li><a href="rq2-results.html" target="_blank" title="">RQ2: How often does TestI predict conflict risk between two tasks?</a></li>
+					  <li><a href="rq3-results.html" target="_blank" title="">RQ3: Is the size of the intersection between two TestI interfaces proportional to the number of files changed in common by the corresponding tasks?</a></li>
+					  <li><a href="rq4-results.html" target="_blank" title="">RQ4: Is TestI a better predictor of conflict risk than TextI?</a></li>						  
                     </ul>
                   </div>
 				</section>
